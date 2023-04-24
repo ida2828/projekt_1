@@ -112,6 +112,29 @@ class Transformacje:
         y00 =m * ygk + (s*1000000) + 500000
         return(x00, y00,xgk,ygk)   
     
+    def u1992(self,f, l):
+        m = 0.9993
+        N = self.a/(np.sqrt(1-self.ecc2 * np.sin(f)**2))
+        t = np.tan(f)
+        e_2 = self.ecc2/(1-self.ecc2)
+        n2 = e_2 * (np.cos(f))**2
+    
+        l0 = np.deg2rad(19)
+        d_l = l - l0
+    
+        A0 = 1 - (self.ecc2/4) - ((3*(self.ecc2**2))/64) - ((5*(self.ecc2**3))/256)   
+        A2 = (3/8) * (self.ecc2 + ((self.ecc2**2)/4) + ((15 * (self.ecc2**3))/128))
+        A4 = (15/256) * (self.ecc2**2 + ((3*(self.ecc2**3))/4))
+        A6 = (35 * (self.ecc2**3))/3072 
+    
+        sigma = self.a * ((A0*f) - (A2*np.sin(2*f)) + (A4*np.sin(4*f)) - (A6*np.sin(6*f)))
+    
+        xgk = sigma + ((d_l**2)/2) * N *np.sin(f) * np.cos(f) * (1 + ((d_l**2)/12) * ((np.cos(f))**2) * (5 - t**2 + 9*n2 + 4*(n2**2)) + ((d_l**4)/360) * ((np.cos(f))**4) * (61 - (58*(t**2)) + (t**4) + (270*n2) - (330 * n2 *(t**2))))
+        ygk = d_l * (N*np.cos(f)) * (1 + ((((d_l**2)/6) * (np.cos(f))**2) * (1-t**2+n2)) +  (((d_l**4)/(120)) * (np.cos(f)**4)) * (5 - (18 * (t**2)) + (t**4) + (14*n2) - (58*n2*(t**2))))
+        
+        x92 = m*xgk - 5300000
+        y92 = m*ygk + 500000
+        return(x92, y92, xgk, ygk)
     
 transformator_wgs84 = Transformacje("wgs84")
 print(transformator_wgs84.transform_XYZ2BLH(3782550,1084730,5002940))

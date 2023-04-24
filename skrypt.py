@@ -80,7 +80,7 @@ class Transformacje:
         t = np.tan(f)
         e_2 = self.ecc2/(1-self.ecc2)
         n2 = e_2 * (np.cos(f))**2
-    
+        
         l = np.rad2deg(l)
         if l>13.5 and l <16.5:
             s = 5
@@ -200,13 +200,13 @@ if __name__ == "__main__":
 #fl2000
 if __name__ == "__main__":
     transformator_wgs84 = Transformacje("wgs84")
-    f = 9; l = 14
+    f = 9; l = 16
     x00, y00,xgk,ygk = transformator_wgs84.transform_u2000(f, l)
     print(x00, y00,xgk,ygk)
     
 if __name__ == "__main__":
     transformator_grs80 = Transformacje("grs80")
-    f = 9; l = 14
+    f = 9; l = 16
     x00, y00,xgk,ygk = transformator_grs80.transform_u2000(f, l)
     print(x00, y00,xgk,ygk)
     

@@ -1,7 +1,6 @@
 import numpy as np
 
 
-
 class Transformacje:
     def __init__(self, model: str = 'wgs84'):
         
@@ -11,6 +10,9 @@ class Transformacje:
         elif model == "grs80":
             self.a = 6378137.0
             self.b = 6356752.31414036
+        elif model == "Krasowskiego":
+            self.a = 6378245.0
+            self.b = 6357397.155
         else:
             raise NotImplementedError(f"{model} model not implemented")
         self.flattening = (self.a - self.b)/self.a
@@ -37,7 +39,7 @@ class Transformacje:
             return(X, Y, Z)
     
      
-    def XYZ2neu(self, xa, ya, za, xb, yb, zb, phi, lam, h):
+    def transform_XYZ2neu(self, xa, ya, za, xb, yb, zb, phi, lam, h):
         N = self.a / np.sqrt(1 - self.ecc2 * np.sin(phi)**2)
         X0 = (N + h) * np.cos(phi) * np.cos(lam)
         Y0 = (N + h) * np.cos(phi) * np.sin(lam)
@@ -72,7 +74,7 @@ class Transformacje:
         return (N, E, U, phi_stopnie, lam_stopnie)
         
 
-    def u2000(self, f, l):
+    def transform_u2000(self, f, l):
         m = 0.999923
         N=self.a/np.sqrt(1-self.ecc2*(np.sin(f))**2)
         t = np.tan(f)
@@ -112,7 +114,7 @@ class Transformacje:
         y00 =m * ygk + (s*1000000) + 500000
         return(x00, y00,xgk,ygk)   
     
-    def u1992(self,f, l):
+    def transform_u1992(self,f, l):
         m = 0.9993
         N = self.a/(np.sqrt(1-self.ecc2 * np.sin(f)**2))
         t = np.tan(f)
@@ -136,11 +138,111 @@ class Transformacje:
         y92 = m*ygk + 500000
         return(x92, y92, xgk, ygk)
     
-transformator_wgs84 = Transformacje("wgs84")
-print(transformator_wgs84.transform_XYZ2BLH(3782550,1084730,5002940))
+#XYZ2BLH   
+if __name__ == "__main__":
+    transformator_wgs84 = Transformacje("wgs84")
+    X = 3664940.500; Y = 1409153.590; Z = 5009571.170
+    f, l, h = transformator_wgs84.transform_XYZ2BLH(X,Y,Z)
+    print(f, l, h)
+    
+if __name__ == "__main__":
+    transformator_grs80 = Transformacje("grs80")
+    X = 3664940.500; Y = 1409153.590; Z = 5009571.170
+    f, l, h = transformator_grs80.transform_XYZ2BLH(X,Y,Z)
+    print(f, l, h)
 
-transformator_grs80 = Transformacje("grs80")
-print(transformator_grs80.transform_XYZ2BLH(3782550,1084730,5002940))
+if __name__ == "__main__":
+    transformator_Krasowskiego = Transformacje("Krasowskiego")
+    X = 3664940.500; Y = 1409153.590; Z = 5009571.170
+    f, l, h = transformator_Krasowskiego.transform_XYZ2BLH(X,Y,Z)
+    print(f, l, h)
+    
+    
+#BLH2XYZ
+if __name__ == "__main__":
+    transformator_wgs84 = Transformacje("wgs84")
+    f = 3664940.500; l = 1409153.590; h = 5009571.170
+    X,Y,Z = transformator_wgs84.transform_BLH2XYZ(f,l,h)
+    print(X,Y,Z)
+    
+if __name__ == "__main__":
+    transformator_grs80 = Transformacje("grs80")
+    f = 3664940.500; l = 1409153.590; h = 5009571.170
+    X,Y,Z = transformator_grs80.transform_BLH2XYZ(f,l,h)
+    print(X,Y,Z)
+    
+    
+if __name__ == "__main__":
+    transformator_Krasowskiego = Transformacje("Krasowskiego")
+    f = 3664940.500; l = 1409153.590; h = 5009571.170
+    X,Y,Z = transformator_Krasowskiego.transform_BLH2XYZ(f,l,h)
+    print(X,Y,Z)
+
+#XYX2neu  
+if __name__ == "__main__":
+    transformator_wgs84 = Transformacje("wgs84")
+    xa = 15445; ya = 1544; za = 45541; xb = 451; yb = 154; zb = 154; phi = 17; lam= 179; h = 100
+    N, E, U, phi_stopnie, lam_stopnie = transformator_wgs84.transform_XYZ2neu(xa, ya, za, xb, yb, zb, phi, lam, h)
+    print(N, E, U, phi_stopnie, lam_stopnie)
+    
+if __name__ == "__main__":
+    transformator_grs80 = Transformacje("grs80")
+    xa = 1; ya = 1; za = 1; xb = 1; yb = 1; zb = 1; phi = 1; lam= 1; h = 1
+    N, E, U, phi_stopnie, lam_stopnie = transformator_grs80.transform_XYZ2neu(xa, ya, za, xb, yb, zb, phi, lam, h)
+    print(N, E, U, phi_stopnie, lam_stopnie)
+    
+if __name__ == "__main__":
+    transformator_Krasowskiego = Transformacje("Krasowskiego")
+    xa = 1; ya = 1; za = 1; xb = 1; yb = 1; zb = 1; phi = 1; lam= 1; h = 1
+    N, E, U, phi_stopnie, lam_stopnie = transformator_Krasowskiego.transform_XYZ2neu(xa, ya, za, xb, yb, zb, phi, lam, h)
+    print(N, E, U, phi_stopnie, lam_stopnie)
+
+#fl2000
+if __name__ == "__main__":
+    transformator_wgs84 = Transformacje("wgs84")
+    f = 9; l = 14
+    x00, y00,xgk,ygk = transformator_wgs84.transform_u2000(f, l)
+    print(x00, y00,xgk,ygk)
+    
+if __name__ == "__main__":
+    transformator_grs80 = Transformacje("grs80")
+    f = 9; l = 14
+    x00, y00,xgk,ygk = transformator_grs80.transform_u2000(f, l)
+    print(x00, y00,xgk,ygk)
+    
+if __name__ == "__main__":
+    transformator_Krasowskiego = Transformacje("Krasowskiego")
+    f = 9; l = 14
+    x00, y00,xgk,ygk = transformator_Krasowskiego.transform_u2000(f, l)
+    print(x00, y00,xgk,ygk)
+    
+
+ #fl292
+if __name__ == "__main__":
+    transformator_wgs84 = Transformacje("wgs84")
+    f = 9; l = 14
+    x92, y92,xgk,ygk = transformator_wgs84.transform_u1992(f, l)
+    print(x92, y92, xgk, ygk)
+
+if __name__ == "__main__":
+    transformator_grs80 = Transformacje("grs80")
+    f = 9; l = 14
+    x92, y92,xgk,ygk = transformator_grs80.transform_u1992(f, l)
+    print(x92, y92, xgk, ygk)
+    
+
+if __name__ == "__main__":
+    transformator_Krasowskiego = Transformacje("Krasowskiego")
+    f = 9; l = 14
+    x92, y92,xgk,ygk = transformator_Krasowskiego.transform_u1992(f, l)
+    print(x92, y92, xgk, ygk)
+
+
+
+             
+
+
+
 
 
 

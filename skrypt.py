@@ -310,6 +310,7 @@ if __name__=='__main_':
 
             x92, y92,xgk,ygk = transformator_Krasowskiego.transform_u1992(f, l)
             print(x92, y92, xgk, ygk)
+             
       
        
         

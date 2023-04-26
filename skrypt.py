@@ -197,11 +197,28 @@ if __name__=='__main_':
             if "print" in line:
                 continue
             elif:
-                rozdzielone_wsp=line.split(',')
-                X.append(rozdzielone_wsp[0])
-                Y.append(rozdzielone_wsp[1])
-                Z.append(rozdzielone_wsp[2])
-            else
+               rozdzielone_wsp=line.split(',')
+               X.append(rozdzielone_wsp[0])
+               Y.append(rozdzielone_wsp[1])
+               Z.append(rozdzielone_wsp[2])
+            elif:   
+               rozdzielone_wsp=line.split('-')
+               FI.append(rozdzielone_wsp[3])
+               LAM.append(rozdzielone_wsp[4])
+               H.append(rozdzielone_wsp[5])
+            elif:
+               rozdzielone_wsp=line.split(';')
+               N.append(rozdzielone_wsp[6])
+               E.append(rozdzielone_wsp[7])
+               U.append(rozdzielone_wsp[8])
+            elif:
+               rozdzielone_wsp=line.split('--')
+               X2000.append(rozdzielone_wsp[9])
+               Y2000.append(rozdzielone_wsp[10])
+            else:
+               rozdzielone_wsp=line.split(' ')
+               X1992.append(rozdzielone_wsp[11])
+               Y1992.append(rozdzielone_wsp[12])
         
         for (x,y,z) in zip(X,Y,Z):
             transformator_wgs84 = Transformacje(model = "wgs84")
@@ -267,6 +284,7 @@ if __name__=='__main_':
             print(x92, y92, xgk, ygk)
             
             transformator_Krasowskiego = Transformacje(model = "Krasowskiego")
+
             x92, y92,xgk,ygk = transformator_Krasowskiego.transform_u1992(f, l)
             print(x92, y92, xgk, ygk)
       

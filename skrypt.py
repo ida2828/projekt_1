@@ -135,108 +135,41 @@ class Transformacje:
         return(x92, y92, xgk, ygk)
 
 
-print("transformacje")
-#XYZ2BLH   
-if __name__ == "__main__":
-    transformator_wgs84 = Transformacje("wgs84")
-    X = 3664940.500; Y = 1409153.590; Z = 5009571.170
-    f, l, h = transformator_wgs84.transform_XYZ2BLH(X,Y,Z)
-    print(f, l, h)
-    (dms(f))
-    (dms(l))
-    
-    transformator_grs80 = Transformacje("grs80")
-    X = 3664940.500; Y = 1409153.590; Z = 5009571.170
-    f, l, h = transformator_grs80.transform_XYZ2BLH(X,Y,Z)
-    print(f, l, h)
-    (dms(f))
-    (dms(l))
-
-    transformator_Krasowskiego = Transformacje("Krasowskiego")
-    X = 3664940.500; Y = 1409153.590; Z = 5009571.170
-    f, l, h = transformator_Krasowskiego.transform_XYZ2BLH(X,Y,Z)
-    print(f, l, h)
-    (dms(f))
-    (dms(l))
-    
-    transformator_wgs84 = Transformacje("wgs84")
-    f = 3664940.500; l = 1409153.590; h = 5009571.170
-    X,Y,Z = transformator_wgs84.transform_BLH2XYZ(f,l,h)
-    print(X,Y,Z)
-    
-    transformator_grs80 = Transformacje("grs80")
-    f = 3664940.500; l = 1409153.590; h = 5009571.170
-    X,Y,Z = transformator_grs80.transform_BLH2XYZ(f,l,h)
-    print(X,Y,Z)
-    
-    transformator_Krasowskiego = Transformacje("Krasowskiego")
-    f = 3664940.500; l = 1409153.590; h = 5009571.170
-    X,Y,Z = transformator_Krasowskiego.transform_BLH2XYZ(f,l,h)
-    print(X,Y,Z)
-    
-    transformator_wgs84 = Transformacje("wgs84")
-    xa = 15445; ya = 1544; za = 45541; xb = 451; yb = 154; zb = 154; phi = 17; lam= 179; h = 100
-    N, E, U, phi_stopnie, lam_stopnie = transformator_wgs84.transform_XYZ2neu(xa, ya, za, xb, yb, zb, phi, lam, h)
-    print(N, E, U, phi_stopnie, lam_stopnie)
-    
-    transformator_grs80 = Transformacje("grs80")
-    xa = 1; ya = 1; za = 1; xb = 1; yb = 1; zb = 1; phi = 1; lam= 1; h = 1
-    N, E, U, phi_stopnie, lam_stopnie = transformator_grs80.transform_XYZ2neu(xa, ya, za, xb, yb, zb, phi, lam, h)
-    print(N, E, U, phi_stopnie, lam_stopnie)
-    
-    transformator_Krasowskiego = Transformacje("Krasowskiego")
-    xa = 1; ya = 1; za = 1; xb = 1; yb = 1; zb = 1; phi = 1; lam= 1; h = 1
-    N, E, U, phi_stopnie, lam_stopnie = transformator_Krasowskiego.transform_XYZ2neu(xa, ya, za, xb, yb, zb, phi, lam, h)
-    print(N, E, U, phi_stopnie, lam_stopnie)
-    
-    transformator_wgs84 = Transformacje("wgs84")
-    f = 9; l = 16; l0= 15; s =5
-    x00, y00,xgk,ygk = transformator_wgs84.transform_u2000(f, l, l0, s)
-    print(x00, y00,xgk,ygk)
-    
-    transformator_grs80 = Transformacje("grs80")
-    f = 9; l = 16; l0= 15; s=5
-    x00, y00,xgk,ygk = transformator_grs80.transform_u2000(f, l, l0,s )
-    print(x00, y00,xgk,ygk)
-    
-    transformator_Krasowskiego = Transformacje("Krasowskiego")
-    f = 9; l = 14; l0= 15; s=5
-    x00, y00,xgk,ygk = transformator_Krasowskiego.transform_u2000(f, l, l0,s)
-    print(x00, y00,xgk,ygk)
-    
-    transformator_wgs84 = Transformacje("wgs84")
-    f = 9; l = 14
-    x92, y92,xgk,ygk = transformator_wgs84.transform_u1992(f, l)
-    print(x92, y92, xgk, ygk)
-    
-    transformator_grs80 = Transformacje("grs80")
-    f = 9; l = 14
-    x92, y92,xgk,ygk = transformator_grs80.transform_u1992(f, l)
-    print(x92, y92, xgk, ygk)
-    
-    transformator_Krasowskiego = Transformacje("Krasowskiego")
-    f = 9; l = 14
-    x92, y92,xgk,ygk = transformator_Krasowskiego.transform_u1992(f, l)
-    print(x92, y92, xgk, ygk)
-
-
-if _name__=='__main_':
+if __name__=='__main_':
     
     import argparse
     parser = argparse.ArgumentParser(description='Transformacje współrzędnych')
-    parser.add_argument('x', type=float, help='Współrzędna x')
-    parser.add_argument('y', type=float, help='Współrzędna y')
-    parser.add_argument('z', type=float, help='Współrzędna z')
+    parser.add_argument('X', type=float, help='Współrzędna x')
+    parser.add_argument('Y', type=float, help='Współrzędna y')
+    parser.add_argument('Z', type=float, help='Współrzędna z')
     args = parser.parse_args()
-    parser.add_argument('fi', type=float, help='Wartosc fi')
-    parser.add_argument('lambda', type=float, help='Wartosc lambda')
+    
+    parser.add_argument('f', type=float, help='Wartosc fi')
+    parser.add_argument('l', type=float, help='Wartosc lambda')
     parser.add_argument('h', type=float, help='Wartosc h')
     args = parser.parse_args()
     
+    parser.add_argument('xa', type=float, help='X punktu A')
+    parser.add_argument('ya', type=float, help='Y punktu A')
+    parser.add_argument('za', type=float, help='Z punktu A')
+    parser.add_argument('xb', type=float, help='X punktu B')
+    parser.add_argument('yb', type=float, help='Y punktu B')
+    parser.add_argument('zb', type=float, help='Z punktu B')
+    parser.add_argument('phi', type=float, help='Wartosc fi')
+    parser.add_argument('lam', type=float, help='Wartosc lambda')
+    parser.add_argument('h', type=float, help='Wartosc h')
+    args = parser.parse_args()
     
-    phi,lam,h = 
+    parser.add_argument('fi', type=float, help='Wartosc fi')
+    parser.add_argument('lambda', type=float, help='Wartosc lambda')
+    parser.add_argument('h', type=float, help='Wartosc h')
+    parser.add_argument('l0', type=float, help='Numer pasa')
+    parser.add_argument('s', type=float, help='Numer odpowiadający numerowi pasa')
+    args = parser.parse_args()
     
-    
+   
+
+
     with open('plikprzykladowedane.py', 'r') as f:
         lines = f.readlines()
 
@@ -244,7 +177,7 @@ if _name__=='__main_':
         Y = []
         Z = []
         
-        PHI=[]
+        FI=[]
         LAM=[]
         H=[]
         
@@ -254,7 +187,7 @@ if _name__=='__main_':
         
         X2000=[]
         Y2000=[]
-
+        
         
         X1992=[]
         Y1992=[]
@@ -270,7 +203,92 @@ if _name__=='__main_':
                 Z.append(rozdzielone_wsp[2])
         
         for (x,y,z) in zip(X,Y,Z):
-        #utworzy obiekt o tych współrzędnych
+            transformator_wgs84 = Transformacje(model = "wgs84")
+            X = 3664940.500; Y = 1409153.590; Z = 5009571.170
+            f, l, h = transformator_wgs84.transform_XYZ2BLH(X,Y,Z)
+            print(f, l, h)
+            (dms(f))
+            (dms(l))
+            
+            transformator_grs80 = Transformacje(model = "grs80")
+            X = 3664940.500; Y = 1409153.590; Z = 5009571.170
+            f, l, h = transformator_grs80.transform_XYZ2BLH(X,Y,Z)
+            print(f, l, h)
+            (dms(f))
+            (dms(l))
+
+            transformator_Krasowskiego = Transformacje(model = "Krasowskiego")
+            X = 3664940.500; Y = 1409153.590; Z = 5009571.170
+            f, l, h = transformator_Krasowskiego.transform_XYZ2BLH(X,Y,Z)
+            print(f, l, h)
+            (dms(f))
+            (dms(l))
+            
+            transformator_wgs84 = Transformacje(model = "wgs84")
+            f = 3664940.500; l = 1409153.590; h = 5009571.170
+            X,Y,Z = transformator_wgs84.transform_BLH2XYZ(f,l,h)
+            print(X,Y,Z)
+            
+            transformator_grs80 = Transformacje(model = "grs80")
+            f = 3664940.500; l = 1409153.590; h = 5009571.170
+            X,Y,Z = transformator_grs80.transform_BLH2XYZ(f,l,h)
+            print(X,Y,Z)
+            
+            transformator_Krasowskiego = Transformacje(model = "Krasowskiego")
+            f = 3664940.500; l = 1409153.590; h = 5009571.170
+            X,Y,Z = transformator_Krasowskiego.transform_BLH2XYZ(f,l,h)
+            print(X,Y,Z)
+            
+            transformator_wgs84 = Transformacje(model = "wgs84")
+            xa = 15445; ya = 1544; za = 45541; xb = 451; yb = 154; zb = 154; phi = 17; lam= 179; h = 100
+            N, E, U, phi_stopnie, lam_stopnie = transformator_wgs84.transform_XYZ2neu(xa, ya, za, xb, yb, zb, phi, lam, h)
+            print(N, E, U, phi_stopnie, lam_stopnie)
+            
+            transformator_grs80 = Transformacje(model = "grs80")
+            xa = 1; ya = 1; za = 1; xb = 1; yb = 1; zb = 1; phi = 1; lam= 1; h = 1
+            N, E, U, phi_stopnie, lam_stopnie = transformator_grs80.transform_XYZ2neu(xa, ya, za, xb, yb, zb, phi, lam, h)
+            print(N, E, U, phi_stopnie, lam_stopnie)
+            
+            transformator_Krasowskiego = Transformacje(model = "Krasowskiego")
+            xa = 1; ya = 1; za = 1; xb = 1; yb = 1; zb = 1; phi = 1; lam= 1; h = 1
+            N, E, U, phi_stopnie, lam_stopnie = transformator_Krasowskiego.transform_XYZ2neu(xa, ya, za, xb, yb, zb, phi, lam, h)
+            print(N, E, U, phi_stopnie, lam_stopnie)
+            
+            transformator_wgs84 = Transformacje(model = "wgs84")
+            f = 9; l = 16; l0= 15; s =5
+            x00, y00,xgk,ygk = transformator_wgs84.transform_u2000(f, l, l0, s)
+            print(x00, y00,xgk,ygk)
+            
+            transformator_grs80 = Transformacje(model = "grs80")
+            f = 9; l = 16; l0= 15; s=5
+            x00, y00,xgk,ygk = transformator_grs80.transform_u2000(f, l, l0,s )
+            print(x00, y00,xgk,ygk)
+            
+            transformator_Krasowskiego = Transformacje(model = "Krasowskiego")
+            f = 9; l = 14; l0= 15; s=5
+            x00, y00,xgk,ygk = transformator_Krasowskiego.transform_u2000(f, l, l0,s)
+            print(x00, y00,xgk,ygk)
+            
+            transformator_wgs84 = Transformacje(model = "wgs84")
+            f = 9; l = 14
+            x92, y92,xgk,ygk = transformator_wgs84.transform_u1992(f, l)
+            print(x92, y92, xgk, ygk)
+            
+            transformator_grs80 = Transformacje(model = "grs80")
+            f = 9; l = 14
+            x92, y92,xgk,ygk = transformator_grs80.transform_u1992(f, l)
+            print(x92, y92, xgk, ygk)
+            
+            transformator_Krasowskiego = Transformacje(model = "Krasowskiego")
+            f = 9; l = 14
+            x92, y92,xgk,ygk = transformator_Krasowskiego.transform_u1992(f, l)
+            print(x92, y92, xgk, ygk)
+      
+       
+        
+       
+        
+       #utworzy obiekt o tych współrzędnych
             geocentryczne=Transformacje(model = "grs80")
             phi,lam,h = geocentryczne.Hirvonen(float(x), float(y), float(z))
             
@@ -288,7 +306,7 @@ if _name__=='__main_':
             print(f'X1992={X1992:.3f}m , Y1992={Y2000:.3f}m ')
             print("=================")
             print("=================")
-             
+         
 
 
 

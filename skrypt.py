@@ -286,26 +286,6 @@ if __name__=='__main_':
       
        
         
-       
-        
-       #utworzy obiekt o tych współrzędnych
-            geocentryczne=Transformacje(model = "grs80")
-            phi,lam,h = geocentryczne.Hirvonen(float(x), float(y), float(z))
-            
-            print('Wynikiem transformacji Hirvonena dla podanych X,Y,Z są współrzędne: ')
-            print(f'B={phi} stopnie, L={lam}stopnie, H={h}m ')
-            
-            geodezyjne=Transformacje(model = "wgs84")
-            X2000,Y2000=geodezyjne.BLHto2000(phi, lam, h)
-            print('Wynikiem transformacji BLH do układu 2000 dla podanych phi, lam, h są współrzędne: ')
-            print(f'X2000={X2000:.3f}m , Y2000={Y2000:.3f}m ')
-            
-            geodezyjne = Transformacje(model = "wgs84")
-            X1992,Y1992 = geodezyjne.BLHto1992(phi, lam, h)
-            print('Wynikiem transformacji BLH do układu 1992 dla podanych phi, lam, h są współrzędne: ')
-            print(f'X1992={X1992:.3f}m , Y1992={Y2000:.3f}m ')
-            print("=================")
-            print("=================")
          
 
 

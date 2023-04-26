@@ -196,91 +196,77 @@ if __name__=='__main_':
         for line in lines:
             if "print" in line:
                 continue
-            else:
+            elif:
                 rozdzielone_wsp=line.split(',')
                 X.append(rozdzielone_wsp[0])
                 Y.append(rozdzielone_wsp[1])
                 Z.append(rozdzielone_wsp[2])
+            else
         
         for (x,y,z) in zip(X,Y,Z):
             transformator_wgs84 = Transformacje(model = "wgs84")
-            X = 3664940.500; Y = 1409153.590; Z = 5009571.170
             f, l, h = transformator_wgs84.transform_XYZ2BLH(X,Y,Z)
             print(f, l, h)
             (dms(f))
             (dms(l))
             
             transformator_grs80 = Transformacje(model = "grs80")
-            X = 3664940.500; Y = 1409153.590; Z = 5009571.170
             f, l, h = transformator_grs80.transform_XYZ2BLH(X,Y,Z)
             print(f, l, h)
             (dms(f))
             (dms(l))
 
             transformator_Krasowskiego = Transformacje(model = "Krasowskiego")
-            X = 3664940.500; Y = 1409153.590; Z = 5009571.170
             f, l, h = transformator_Krasowskiego.transform_XYZ2BLH(X,Y,Z)
             print(f, l, h)
             (dms(f))
             (dms(l))
             
             transformator_wgs84 = Transformacje(model = "wgs84")
-            f = 3664940.500; l = 1409153.590; h = 5009571.170
             X,Y,Z = transformator_wgs84.transform_BLH2XYZ(f,l,h)
             print(X,Y,Z)
             
             transformator_grs80 = Transformacje(model = "grs80")
-            f = 3664940.500; l = 1409153.590; h = 5009571.170
             X,Y,Z = transformator_grs80.transform_BLH2XYZ(f,l,h)
             print(X,Y,Z)
             
             transformator_Krasowskiego = Transformacje(model = "Krasowskiego")
-            f = 3664940.500; l = 1409153.590; h = 5009571.170
             X,Y,Z = transformator_Krasowskiego.transform_BLH2XYZ(f,l,h)
             print(X,Y,Z)
             
             transformator_wgs84 = Transformacje(model = "wgs84")
-            xa = 15445; ya = 1544; za = 45541; xb = 451; yb = 154; zb = 154; phi = 17; lam= 179; h = 100
             N, E, U, phi_stopnie, lam_stopnie = transformator_wgs84.transform_XYZ2neu(xa, ya, za, xb, yb, zb, phi, lam, h)
             print(N, E, U, phi_stopnie, lam_stopnie)
             
             transformator_grs80 = Transformacje(model = "grs80")
-            xa = 1; ya = 1; za = 1; xb = 1; yb = 1; zb = 1; phi = 1; lam= 1; h = 1
             N, E, U, phi_stopnie, lam_stopnie = transformator_grs80.transform_XYZ2neu(xa, ya, za, xb, yb, zb, phi, lam, h)
             print(N, E, U, phi_stopnie, lam_stopnie)
             
             transformator_Krasowskiego = Transformacje(model = "Krasowskiego")
-            xa = 1; ya = 1; za = 1; xb = 1; yb = 1; zb = 1; phi = 1; lam= 1; h = 1
             N, E, U, phi_stopnie, lam_stopnie = transformator_Krasowskiego.transform_XYZ2neu(xa, ya, za, xb, yb, zb, phi, lam, h)
             print(N, E, U, phi_stopnie, lam_stopnie)
             
             transformator_wgs84 = Transformacje(model = "wgs84")
-            f = 9; l = 16; l0= 15; s =5
             x00, y00,xgk,ygk = transformator_wgs84.transform_u2000(f, l, l0, s)
             print(x00, y00,xgk,ygk)
             
             transformator_grs80 = Transformacje(model = "grs80")
-            f = 9; l = 16; l0= 15; s=5
             x00, y00,xgk,ygk = transformator_grs80.transform_u2000(f, l, l0,s )
             print(x00, y00,xgk,ygk)
             
             transformator_Krasowskiego = Transformacje(model = "Krasowskiego")
-            f = 9; l = 14; l0= 15; s=5
             x00, y00,xgk,ygk = transformator_Krasowskiego.transform_u2000(f, l, l0,s)
             print(x00, y00,xgk,ygk)
             
             transformator_wgs84 = Transformacje(model = "wgs84")
-            f = 9; l = 14
             x92, y92,xgk,ygk = transformator_wgs84.transform_u1992(f, l)
             print(x92, y92, xgk, ygk)
             
             transformator_grs80 = Transformacje(model = "grs80")
-            f = 9; l = 14
             x92, y92,xgk,ygk = transformator_grs80.transform_u1992(f, l)
             print(x92, y92, xgk, ygk)
             
             transformator_Krasowskiego = Transformacje(model = "Krasowskiego")
-            f = 9; l = 14
             x92, y92,xgk,ygk = transformator_Krasowskiego.transform_u1992(f, l)
             print(x92, y92, xgk, ygk)
       

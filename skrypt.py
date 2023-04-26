@@ -1,4 +1,5 @@
 import numpy as np
+from math import sin, cos, sqrt, atan, atan2, degrees, radians
 
 def dms(x):
     sig = ' '
@@ -24,11 +25,11 @@ class Transformacje:
             self.a = 6378245.0
             self.b = 6357397.155
         else:
-            raise NotImplementedError(f"{model} model not implemented")
+            raise NotImplementedError(f"{model} model niezdefiniowany")
         self.flattening = (self.a - self.b)/self.a
         self.ecc2 = 2 * self.flattening - self.flattening ** 2
     
-    def transform_XYZ2BLH(self,X,Y,Z):
+    def transform_XYZ2BLH(self,X,Y,Z, output = 'dec_degree'):
         p = np.sqrt(X**2 + Y**2)
         f = np.arctan(Z/(p*(1 - self.ecc2)))
         while True:
@@ -39,17 +40,29 @@ class Transformacje:
             if np.abs(fp - f) < (0.000001/206265):
                 break
         l = np.arctan2(Y,X)
-        return(f,l,h)
+        if output == "dec_degree": #stopnie dziesiętne
+            return degrees(f), degrees(l), h 
+        elif output == "dms": #stopnie minuty sekundy
+            f = self.dms(degrees(f))
+            l = self.dms(degrees(l))
+            return f"{f[0]:02d}:{f[1]:02d}:{f[2]:.2f}", f"{l[0]:02d}:{l[1]:02d}:{l[2]:.2f}", f"{h:.3f}"
+        else:
+            raise NotImplementedError(f"{output} - format niezdefiniowany")
+            
     
-    def transform_BLH2XYZ (self, f, l, h):
-            N = self.a/ np.sqrt(1-self.ecc2 * np.sin(f)**2)
-            X=(N+h)*np.cos(f)*np.cos(l)
-            Y=(N+h)*np.cos(f)*np.sin(l)
-            Z=(N*(1-self.ecc2)+h)*np.sin(f)
-            return(X, Y, Z)
+    def transform_BLH2XYZ (self, f, l, h,output = "XYZ"):
+        N = self.a/ np.sqrt(1-self.ecc2 * np.sin(f)**2)
+        X=(N+h)*np.cos(f)*np.cos(l)
+        Y=(N+h)*np.cos(f)*np.sin(l)
+        Z=(N*(1-self.ecc2)+h)*np.sin(f)
+        if output == "XYZ":
+            return(X,Y,Z)
+        else:
+            raise NotImplementedError(f"{output} - format niezdefiniowany")
+            
     
      
-    def transform_XYZ2neu(self, xa, ya, za, xb, yb, zb, phi, lam, h):
+    def transform_XYZ2neu(self, xa, ya, za, xb, yb, zb, phi, lam, h, output = "NEU,phi_stopnie,lam_stopnie"):
         N = self.a / np.sqrt(1 - self.ecc2 * np.sin(phi)**2)
         X0 = (N + h) * np.cos(phi) * np.cos(lam)
         Y0 = (N + h) * np.cos(phi) * np.sin(lam)
@@ -80,11 +93,13 @@ class Transformacje:
         
         phi_stopnie = np.degrees(phi)
         lam_stopnie = np.degrees(lam)
+        if output == "NEU,phi_stopnie,lam_stopnie":
+            return N,E,U,phi_stopnie,lam_stopnie
+        else:
+            raise NotImplementedError(f"{output} - format niezdefiniowany")
         
-        return (N, E, U, phi_stopnie, lam_stopnie)
         
-
-    def transform_u2000(self, f, l, l0, s):
+    def transform_u2000(self, f, l, l0, s, output = "x00, y00, xgk, ygk"):
         m = 0.999923
         N=self.a/np.sqrt(1-self.ecc2*(np.sin(f))**2)
         t = np.tan(f)
@@ -108,9 +123,14 @@ class Transformacje:
     
         x00 =m * xgk
         y00 =m * ygk + (s*1000000) + 500000
-        return(x00, y00,xgk,ygk) 
+        if output == "x00, y00, xgk, ygk""": 
+            return(x00, y00, xgk, ygk)
+        else:
+          raise NotImplementedError(f"{output} - format niezdefiniowany")  
     
-    def transform_u1992(self,f, l):
+        
+    
+    def transform_u1992(self,f, l, output = "x92, y92, xgk, ygk"):
         m = 0.9993
         N = self.a/(np.sqrt(1-self.ecc2 * np.sin(f)**2))
         t = np.tan(f)
@@ -132,23 +152,27 @@ class Transformacje:
         
         x92 = m*xgk - 5300000
         y92 = m*ygk + 500000
-        return(x92, y92, xgk, ygk)
+        if output == "x92, y92, xgk, ygk":
+            return(x92, y92, xgk, ygk)
+        else:
+          raise NotImplementedError(f"{output} - format niezdefiniowany")  
 
 
 if __name__=='__main_':
     
     import argparse
+    #XYZ2BLH
     parser = argparse.ArgumentParser(description='Transformacje współrzędnych')
     parser.add_argument('X', type=float, help='Współrzędna x')
     parser.add_argument('Y', type=float, help='Współrzędna y')
     parser.add_argument('Z', type=float, help='Współrzędna z')
     args = parser.parse_args()
-    
+    #BLH2XYZ
     parser.add_argument('f', type=float, help='Wartosc fi')
     parser.add_argument('l', type=float, help='Wartosc lambda')
     parser.add_argument('h', type=float, help='Wartosc h')
     args = parser.parse_args()
-    
+    #XYZ2NEU
     parser.add_argument('xa', type=float, help='X punktu A')
     parser.add_argument('ya', type=float, help='Y punktu A')
     parser.add_argument('za', type=float, help='Z punktu A')
@@ -159,17 +183,16 @@ if __name__=='__main_':
     parser.add_argument('lam', type=float, help='Wartosc lambda')
     parser.add_argument('h', type=float, help='Wartosc h')
     args = parser.parse_args()
-    
+    #fl2u2000
     parser.add_argument('fi', type=float, help='Wartosc fi')
     parser.add_argument('lambda', type=float, help='Wartosc lambda')
-    parser.add_argument('h', type=float, help='Wartosc h')
     parser.add_argument('l0', type=float, help='Numer pasa')
     parser.add_argument('s', type=float, help='Numer odpowiadający numerowi pasa')
     args = parser.parse_args()
+    #fl2u1992
+    parser.add_argument('fi', type=float, help='Wartosc fi')
+    parser.add_argument('lambda', type=float, help='Wartosc lambda')
     
-   
-
-
     with open('plikprzykladowedane.py', 'r') as f:
         lines = f.readlines()
 
@@ -268,7 +291,7 @@ if __name__=='__main_':
             print(x00, y00,xgk,ygk)
             
             transformator_grs80 = Transformacje(model = "grs80")
-            x00, y00,xgk,ygk = transformator_grs80.transform_u2000(f, l, l0,s )
+            x00, y00,xgk,ygk = transformator_grs80.transform_u2000(f, l, l0,s)
             print(x00, y00,xgk,ygk)
             
             transformator_Krasowskiego = Transformacje(model = "Krasowskiego")

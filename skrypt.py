@@ -196,29 +196,29 @@ if __name__=='__main_':
         for line in lines:
             if "print" in line:
                 continue
-            elif:
+            elif "," in line:
                rozdzielone_wsp=line.split(',')
                X.append(rozdzielone_wsp[0])
                Y.append(rozdzielone_wsp[1])
                Z.append(rozdzielone_wsp[2])
-            elif:   
+            elif "-" in line:   
                rozdzielone_wsp=line.split('-')
-               FI.append(rozdzielone_wsp[3])
-               LAM.append(rozdzielone_wsp[4])
-               H.append(rozdzielone_wsp[5])
-            elif:
+               FI.append(rozdzielone_wsp[0])
+               LAM.append(rozdzielone_wsp[1])
+               H.append(rozdzielone_wsp[2])
+            elif ";" in line:
                rozdzielone_wsp=line.split(';')
-               N.append(rozdzielone_wsp[6])
-               E.append(rozdzielone_wsp[7])
-               U.append(rozdzielone_wsp[8])
-            elif:
+               N.append(rozdzielone_wsp[0])
+               E.append(rozdzielone_wsp[1])
+               U.append(rozdzielone_wsp[2])
+            elif "--" in line:
                rozdzielone_wsp=line.split('--')
-               X2000.append(rozdzielone_wsp[9])
-               Y2000.append(rozdzielone_wsp[10])
+               X2000.append(rozdzielone_wsp[0])
+               Y2000.append(rozdzielone_wsp[1])
             else:
                rozdzielone_wsp=line.split(' ')
-               X1992.append(rozdzielone_wsp[11])
-               Y1992.append(rozdzielone_wsp[12])
+               X1992.append(rozdzielone_wsp[0])
+               Y1992.append(rozdzielone_wsp[1])
         
         for (x,y,z) in zip(X,Y,Z):
             transformator_wgs84 = Transformacje(model = "wgs84")

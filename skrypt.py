@@ -193,8 +193,9 @@ if __name__=='__main_':
     parser.add_argument('fi', type=float, help='Wartosc fi')
     parser.add_argument('lambda', type=float, help='Wartosc lambda')
     
-    with open('plikprzykladowedane.py', 'r') as f:
-        lines = f.readlines()
+    
+    with open('twojedane.py', 'r') as file:
+        lines = file.readlines()
 
         X = []
         Y = []
@@ -310,6 +311,23 @@ if __name__=='__main_':
 
             x92, y92,xgk,ygk = transformator_Krasowskiego.transform_u1992(f, l)
             print(x92, y92, xgk, ygk)
+            
+            
+            with open('wyniki.txt', 'w') as file:
+                f.write('X: ' + str(X) + '\n')
+                f.write('Y: ' + str(Y) + '\n')
+                f.write('Z: ' + str(Z) + '\n')
+                f.write('FI: ' + str(FI) + '\n')
+                f.write('LAM: ' + str(LAM) + '\n')
+                f.write('H: ' + str(H) + '\n')
+                f.write('N: ' + str(N) + '\n')
+                f.write('E: ' + str(E) + '\n')
+                f.write('U: ' + str(U) + '\n')
+                f.write('X2000: ' + str(X2000) + '\n')
+                f.write('Y2000: ' + str(Y2000) + '\n')
+                f.write('X1992: ' + str(X1992) + '\n')
+                f.write('Y1992: ' + str(Y1992) + '\n') 
+                print('Zapisano wyniki do pliku wyniki.txt')
              
       
        

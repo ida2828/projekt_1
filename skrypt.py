@@ -1,5 +1,7 @@
 import numpy as np
 from math import sin, cos, sqrt, atan, atan2, degrees, radians
+import argparse
+
 
 def dms(x):
     sig = ' '
@@ -47,7 +49,8 @@ class Transformacje:
         elif output == "dms": #stopnie minuty sekundy
             f = self.dms(degrees(f))
             l = self.dms(degrees(l))
-            return f"{f[0]:02d}:{f[1]:02d}:{f[2]:.2f}", f"{l[0]:02d}:{l[1]:02d}:{l[2]:.2f}", f"{h:.3f}"
+            #return f"{f[0]:02d}:{f[1]:02d}:{f[2]:.2f}", f"{l[0]:02d}:{l[1]:02d}:{l[2]:.2f}", f"{h:.3f}"
+            return f"{f[0]:02d}", f"{l[0]:02d}", f"{h:.3f}"
         else:
             raise NotImplementedError(f"{output} - format niezdefiniowany")
             
@@ -162,7 +165,8 @@ class Transformacje:
 
 if __name__=='__main__':
     
-    import argparse
+    
+    #xa=0
     #XYZ2BLH
     parser = argparse.ArgumentParser(description='Transformacje współrzędnych')
     # parser.add_argument('X', type=float, help='Współrzędna x')
@@ -198,16 +202,34 @@ if __name__=='__main__':
     args = parser.parse_args() # parser.parse_args tyko raz na koncu 
     
     print(args.f)
-    
-    
+        
     with open(args.f, 'r') as file:
         lines = file.readlines()
 
         if args.t == 'XYZ2BLH':
             model = args.m
             transformator = Transformacje(model)
-            transformator.transform_XYZ2BLH()
-
+            transformator.transform_XYZ2BLH("-f")
+        elif args.t == 'BLH2XYZ':
+            model = args.m
+            transformator = Transformacje(model)
+            transformator.transform_BLH2XYZ("-f")
+        elif args.t == 'XYZ2NEU':
+            model = args.m
+            transformator = Transformacje(model)
+            transformator.transform_XYZ2neu("-f")
+        elif args.t == 'u2000':
+            model = args.m
+            transformator = Transformacje(model)
+            transformator.transform_u2000("-f")
+        elif args.t == 'u1992':
+            model = args.m
+            transformator = Transformacje(model)
+            transformator.transform_u1992("-f")
+        else:
+            print("nie ma takiego układu")  
+        
+            
 
         X = []
         Y = []
@@ -228,33 +250,49 @@ if __name__=='__main__':
         X1992=[]
         Y1992=[]
         
+        with open('wyniki.txt', 'w') as f:
+            f.write('X: ' + str(X) + '\n')
+            f.write('Y: ' + str(Y) + '\n')
+            f.write('Z: ' + str(Z) + '\n')
+            f.write('FI: ' + str(FI) + '\n')
+            f.write('LAM: ' + str(LAM) + '\n')
+            f.write('H: ' + str(H) + '\n')
+            f.write('N: ' + str(N) + '\n')
+            f.write('E: ' + str(E) + '\n')
+            f.write('U: ' + str(U) + '\n')
+            f.write('X2000: ' + str(X2000) + '\n')
+            f.write('Y2000: ' + str(Y2000) + '\n')
+            f.write('X1992: ' + str(X1992) + '\n')
+            f.write('Y1992: ' + str(Y1992) + '\n') 
+            print('Zapisano wyniki do pliku wyniki.txt')
         
         for line in lines:
             if "print" in line:
                 continue
-            elif "," in line:
-               rozdzielone_wsp=line.split(',')
-               X.append(rozdzielone_wsp[0])
-               Y.append(rozdzielone_wsp[1])
-               Z.append(rozdzielone_wsp[2])
+            elif " " in line:
+                rozdzielone_wsp=line.split(" ")
+                X.append(rozdzielone_wsp[0])
+                Y.append(rozdzielone_wsp[1])
+                Z.append(rozdzielone_wsp[2])
             elif "-" in line:   
-               rozdzielone_wsp=line.split('-')
+               rozdzielone_wsp=line.split(' ')
                FI.append(rozdzielone_wsp[0])
                LAM.append(rozdzielone_wsp[1])
                H.append(rozdzielone_wsp[2])
             elif ";" in line:
-               rozdzielone_wsp=line.split(';')
+               rozdzielone_wsp=line.split(' ')
                N.append(rozdzielone_wsp[0])
                E.append(rozdzielone_wsp[1])
                U.append(rozdzielone_wsp[2])
             elif "--" in line:
-               rozdzielone_wsp=line.split('--')
+               rozdzielone_wsp=line.split(' ')
                X2000.append(rozdzielone_wsp[0])
                Y2000.append(rozdzielone_wsp[1])
             else:
                rozdzielone_wsp=line.split(' ')
                X1992.append(rozdzielone_wsp[0])
                Y1992.append(rozdzielone_wsp[1])
+              
         
         for (x,y,z) in zip(X,Y,Z):
             transformator_wgs84 = Transformacje(model = "wgs84")
@@ -324,23 +362,23 @@ if __name__=='__main__':
             x92, y92,xgk,ygk = transformator_Krasowskiego.transform_u1992(f, l)
             print(x92, y92, xgk, ygk)
             
-            
-            with open('wyniki.txt', 'w') as f:
-                f.write('X: ' + str(X) + '\n')
-                f.write('Y: ' + str(Y) + '\n')
-                f.write('Z: ' + str(Z) + '\n')
-                f.write('FI: ' + str(FI) + '\n')
-                f.write('LAM: ' + str(LAM) + '\n')
-                f.write('H: ' + str(H) + '\n')
-                f.write('N: ' + str(N) + '\n')
-                f.write('E: ' + str(E) + '\n')
-                f.write('U: ' + str(U) + '\n')
-                f.write('X2000: ' + str(X2000) + '\n')
-                f.write('Y2000: ' + str(Y2000) + '\n')
-                f.write('X1992: ' + str(X1992) + '\n')
-                f.write('Y1992: ' + str(Y1992) + '\n') 
-                print('Zapisano wyniki do pliku wyniki.txt')
-             
+            '''
+                with open('wyniki.txt', 'w') as f:
+                    f.write('X: ' + str(X) + '\n')
+                    f.write('Y: ' + str(Y) + '\n')
+                    f.write('Z: ' + str(Z) + '\n')
+                    f.write('FI: ' + str(FI) + '\n')
+                    f.write('LAM: ' + str(LAM) + '\n')
+                    f.write('H: ' + str(H) + '\n')
+                    f.write('N: ' + str(N) + '\n')
+                    f.write('E: ' + str(E) + '\n')
+                    f.write('U: ' + str(U) + '\n')
+                    f.write('X2000: ' + str(X2000) + '\n')
+                    f.write('Y2000: ' + str(Y2000) + '\n')
+                    f.write('X1992: ' + str(X1992) + '\n')
+                    f.write('Y1992: ' + str(Y1992) + '\n') 
+                    print('Zapisano wyniki do pliku wyniki.txt')
+             '''
       
        
         

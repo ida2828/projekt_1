@@ -12,6 +12,8 @@ def dms(x):
     s = (x - d - m/60) * 3600
     print(sig, "%3d %2d %7.5f" %(d, abs(m), abs(s)))
 
+print('test')
+
 class Transformacje:
     def __init__(self, model: str = 'wgs84'):
         
@@ -158,44 +160,54 @@ class Transformacje:
           raise NotImplementedError(f"{output} - format niezdefiniowany")  
 
 
-if __name__=='__main_':
+if __name__=='__main__':
     
     import argparse
     #XYZ2BLH
     parser = argparse.ArgumentParser(description='Transformacje współrzędnych')
-    parser.add_argument('X', type=float, help='Współrzędna x')
-    parser.add_argument('Y', type=float, help='Współrzędna y')
-    parser.add_argument('Z', type=float, help='Współrzędna z')
-    args = parser.parse_args()
-    #BLH2XYZ
-    parser.add_argument('f', type=float, help='Wartosc fi')
-    parser.add_argument('l', type=float, help='Wartosc lambda')
-    parser.add_argument('h', type=float, help='Wartosc h')
-    args = parser.parse_args()
-    #XYZ2NEU
-    parser.add_argument('xa', type=float, help='X punktu A')
-    parser.add_argument('ya', type=float, help='Y punktu A')
-    parser.add_argument('za', type=float, help='Z punktu A')
-    parser.add_argument('xb', type=float, help='X punktu B')
-    parser.add_argument('yb', type=float, help='Y punktu B')
-    parser.add_argument('zb', type=float, help='Z punktu B')
-    parser.add_argument('phi', type=float, help='Wartosc fi')
-    parser.add_argument('lam', type=float, help='Wartosc lambda')
-    parser.add_argument('h', type=float, help='Wartosc h')
-    args = parser.parse_args()
-    #fl2u2000
-    parser.add_argument('fi', type=float, help='Wartosc fi')
-    parser.add_argument('lambda', type=float, help='Wartosc lambda')
-    parser.add_argument('l0', type=float, help='Numer pasa')
-    parser.add_argument('s', type=float, help='Numer odpowiadający numerowi pasa')
-    args = parser.parse_args()
-    #fl2u1992
-    parser.add_argument('fi', type=float, help='Wartosc fi')
-    parser.add_argument('lambda', type=float, help='Wartosc lambda')
+    # parser.add_argument('X', type=float, help='Współrzędna x')
+    # parser.add_argument('Y', type=float, help='Współrzędna y')
+    # parser.add_argument('Z', type=float, help='Współrzędna z')
+    # #BLH2XYZ
+    # parser.add_argument('f', type=float, help='Wartosc fi')
+    # parser.add_argument('l', type=float, help='Wartosc lambda')
+    # parser.add_argument('h', type=float, help='Wartosc h')
+    
+    # #XYZ2NEU
+    # parser.add_argument('xa', type=float, help='X punktu A')
+    # parser.add_argument('ya', type=float, help='Y punktu A')
+    # parser.add_argument('za', type=float, help='Z punktu A')
+    # parser.add_argument('xb', type=float, help='X punktu B')
+    # parser.add_argument('yb', type=float, help='Y punktu B')
+    # parser.add_argument('zb', type=float, help='Z punktu B')
+    # parser.add_argument('phi', type=float, help='Wartosc fi')
+    # parser.add_argument('lam', type=float, help='Wartosc lambda')
+    # parser.add_argument('h', type=float, help='Wartosc h')
+    
+    # #fl2u2000
+    # parser.add_argument('fi', type=float, help='Wartosc fi')
+    # parser.add_argument('lambda', type=float, help='Wartosc lambda')
+    # parser.add_argument('l0', type=float, help='Numer pasa')
+    # parser.add_argument('s', type=float, help='Numer odpowiadający numerowi pasa')
+    # #fl2u1992
+    # parser.add_argument('fi', type=float, help='Wartosc fi')
+    # parser.add_argument('lambda', type=float, help='Wartosc lambda')
+    parser.add_argument('-f', type=str, help='Scieżka do pliku z danymi do transformacji')
+    parser.add_argument('-t', type=str, help='rodzaj transformacji')
+    parser.add_argument('-m', type=str, help='model elipsoidy')
+    args = parser.parse_args() # parser.parse_args tyko raz na koncu 
+    
+    print(args.f)
     
     
-    with open('twojedane.py', 'r') as file:
+    with open(args.f, 'r') as file:
         lines = file.readlines()
+
+        if args.t == 'XYZ2BLH':
+            model = args.m
+            transformator = Transformacje(model)
+            transformator.transform_XYZ2BLH()
+
 
         X = []
         Y = []
@@ -313,7 +325,7 @@ if __name__=='__main_':
             print(x92, y92, xgk, ygk)
             
             
-            with open('wyniki.txt', 'w') as file:
+            with open('wyniki.txt', 'w') as f:
                 f.write('X: ' + str(X) + '\n')
                 f.write('Y: ' + str(Y) + '\n')
                 f.write('Z: ' + str(Z) + '\n')

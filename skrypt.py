@@ -49,8 +49,11 @@ class Transformacje:
         elif output == "dms": #stopnie minuty sekundy
             f = self.dms(degrees(f))
             l = self.dms(degrees(l))
+            return f"{f[0]}", f"{l[0]}", f"{h[0]}"
             #return f"{f[0]:02d}:{f[1]:02d}:{f[2]:.2f}", f"{l[0]:02d}:{l[1]:02d}:{l[2]:.2f}", f"{h:.3f}"
-            return f"{f[0]:02d}", f"{l[0]:02d}", f"{h:.3f}"
+            #return f"{f[0]:02d}", f"{l[0]:02d}", f"{h:.3f}"
+            #return f'{line[0]},{line[1]},{line[2]}\n'
+            #return f"{f[0]:02d}{f[1]:02d}{f[2]:02d}", f"{l[0]:02d}{l[1]:02d}{l[2]:02d}", f"{h[0]:.3f}{h[1]:.3f}{h[2]:.3f}"
         else:
             raise NotImplementedError(f"{output} - format niezdefiniowany")
             
@@ -198,14 +201,20 @@ if __name__=='__main__':
     # parser.add_argument('lambda', type=float, help='Wartosc lambda')
     parser.add_argument('-f', type=str, help='Scieżka do pliku z danymi do transformacji')
     parser.add_argument('-t', type=str, help='rodzaj transformacji')
-    parser.add_argument('-m', type=str, help='model elipsoidy')
-    args = parser.parse_args() # parser.parse_args tyko raz na koncu 
+    parser.add_argument('-m', type=str, help='model elipsoidy', choices=['wgs84', 'grs80', 'Krasowskiego'])
+    parser.add_argument('-fk', type=str, help='Ścieżka do pliku do którego program zapisuje dane')
+    args = parser.parse_args() 
+    print(args.f, args.t, args.m, args.fk)
     
-    print(args.f)
-        
+
     with open(args.f, 'r') as file:
         lines = file.readlines()
-
+        #lines = args.f.readlines()
+        #wyniki = open(args.fk, 'w')
+   
+        #if args.t == 'XYZ2BLH':
+         #   xyz2blh = Transformacje("model")
+          #  f,l,h = xyz2blh.transform_XYZ2BLH()
         if args.t == 'XYZ2BLH':
             model = args.m
             transformator = Transformacje(model)
@@ -269,29 +278,31 @@ if __name__=='__main__':
         for line in lines:
             if "print" in line:
                 continue
-            elif " " in line:
-                rozdzielone_wsp=line.split(" ")
-                X.append(rozdzielone_wsp[0])
-                Y.append(rozdzielone_wsp[1])
-                Z.append(rozdzielone_wsp[2])
-            elif "-" in line:   
-               rozdzielone_wsp=line.split(' ')
-               FI.append(rozdzielone_wsp[0])
-               LAM.append(rozdzielone_wsp[1])
-               H.append(rozdzielone_wsp[2])
-            elif ";" in line:
-               rozdzielone_wsp=line.split(' ')
-               N.append(rozdzielone_wsp[0])
-               E.append(rozdzielone_wsp[1])
-               U.append(rozdzielone_wsp[2])
-            elif "--" in line:
-               rozdzielone_wsp=line.split(' ')
-               X2000.append(rozdzielone_wsp[0])
-               Y2000.append(rozdzielone_wsp[1])
+            elif "," in line:
+                rozdzielone_wsp=line.split(",")
+                X.append(float(rozdzielone_wsp[0]))
+                Y.append(float(rozdzielone_wsp[1]))
+                Z.append(float(rozdzielone_wsp[2]))
+            elif "," in line:   
+               rozdzielone_wsp=line.split(',')
+               FI.append(float(rozdzielone_wsp[0]))
+               LAM.append(float(rozdzielone_wsp[1]))
+               H.append(float(rozdzielone_wsp[2]))
+            elif "," in line:
+               rozdzielone_wsp=line.split(',')
+               N.append(float(rozdzielone_wsp[0]))
+               E.append(float(rozdzielone_wsp[1]))
+               U.append(float(rozdzielone_wsp[2]))
+            elif "," in line:
+               rozdzielone_wsp=line.split(',')
+               X2000.append(float(rozdzielone_wsp[0]))
+               Y2000.append(float(rozdzielone_wsp[1]))
+            elif "," in line:
+               rozdzielone_wsp=line.split(',')
+               X1992.append(float(rozdzielone_wsp[0]))
+               Y1992.append(float(rozdzielone_wsp[1]))
             else:
-               rozdzielone_wsp=line.split(' ')
-               X1992.append(rozdzielone_wsp[0])
-               Y1992.append(rozdzielone_wsp[1])
+                print("Nieprawidłowe przekazanie współrzędnych")
               
         
         for (x,y,z) in zip(X,Y,Z):

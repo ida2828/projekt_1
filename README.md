@@ -31,7 +31,7 @@ Polecenia wykonujemy w cmd- wierszu polecenia. Program korzysta z biblioteki arg
 
 Przykładowe wywołanie w wierszu polecenia cmd:
 
-C:\Users\Ida>python C:\Users\Ida\project_1\skrypt.py -f C:\Users\Ida\project_1\xyz.txt -m wgs84 -t XYZ2BLH -fk  C:\Users\Ida\project_1\wynikBLH.txt
+C:\Users\Ida>python C:\Users\Ida\project_1\skrypt.py -f C:\Users\Ida\project_1\xyz.txt -m wgs84 -t XYZ2BLH -fk C:\Users\Ida\project_1\wynikBLH.txt
 
 Dane zapisujemy w określony sposób:
 

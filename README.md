@@ -2,9 +2,13 @@ INSTRUKCJA
 
 1.Zasotsowanie programu:
 -przeliczenie współrzędnych geocentrycznych XYZ na współrzędne geodezyjne BLH
+
 -przeliczenie współrzędnych geodezyjnych BLH do współrzędnych geocentrycznych XYZ
+
 -przeliczenie współrzędnych geocentrycznych XYZ do współrzędnych topocentrcznych NEU
+
 -przeliczenie współrzędnych geodezyjnych BLHdo współrzędnych prostokątnych w układzie 2000
+
 -przeliczenie współrzędnych geodezyjnych BLH do współrzędnych prostokątnych w układzie 1992
 
 
@@ -14,7 +18,7 @@ Program obsługuje parametry modeli elipsoid: GRS80, WGS84, Krassowskiego
 2.Warunki działania programu:
 -system operacyjny Windows
 -zainstalowany na danym urządzeniu Python w wersji 3.9 oraz Spyder
--biblioteka Numpy
+-biblioteka Numpy oraz Argparse
 
 3.Praca z programem:
 

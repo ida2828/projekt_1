@@ -33,7 +33,7 @@ class Transformacje:
         self.flattening = (self.a - self.b)/self.a
         self.ecc2 = 2 * self.flattening - self.flattening ** 2
     
-    def XYZ2BLH(self,X,Y,Z): #, output = 'dec_degree'
+    def XYZ2BLH(self,X,Y,Z): 
         p = np.sqrt(X**2 + Y**2)
         f = np.arctan(Z/(p*(1 - self.ecc2)))
         while True:
@@ -45,20 +45,7 @@ class Transformacje:
                 break
         l = np.arctan2(Y,X)
         return(f,l,h)
-    '''
-        if output == "dec_degree": #stopnie dziesiętne
-            return degrees(f), degrees(l), h 
-        elif output == "dms": #stopnie minuty sekundy
-            f = self.dms(degrees(f))
-            l = self.dms(degrees(l))
-            return f"{f[0]}", f"{l[0]}", f"{h[0]}"
-            #return f"{f[0]:02d}:{f[1]:02d}:{f[2]:.2f}", f"{l[0]:02d}:{l[1]:02d}:{l[2]:.2f}", f"{h:.3f}"
-            #return f"{f[0]:02d}", f"{l[0]:02d}", f"{h:.3f}"
-            #return f'{line[0]},{line[1]},{line[2]}\n'
-            #return f"{f[0]:02d}{f[1]:02d}{f[2]:02d}", f"{l[0]:02d}{l[1]:02d}{l[2]:02d}", f"{h[0]:.3f}{h[1]:.3f}{h[2]:.3f}"
-        else:
-            raise NotImplementedError(f"{output} - format niezdefiniowany")
-          '''  
+    
     
     def BLH2XYZ (self, f, l, h,output = "XYZ"):
         N = self.a/ np.sqrt(1-self.ecc2 * np.sin(f)**2)
@@ -524,7 +511,7 @@ if __name__=='__main__':
                         #utworzy obiekt o tych współrzędnych
                         flh_Krasowskiego=Transformacje(model = "Krasowskiego")
                         x00, y00 = flh_Krasowskiego.u2000(float(PHI), float(LAM), float(H))
-                        wyniki.write("{}, {}, {}\n".format(x00, y00))
+                        wyniki.write("{}, {}\n".format(x00, y00))
                         
 #flh2 1992
     elif args.t =='u1992':
@@ -535,32 +522,17 @@ if __name__=='__main__':
              
                 B=[]
                 L=[]
-                H=[]
+                
                 for line in lines:
                     
-                        rozdzielone_wsp = line.split(',')
-                        Bd = rozdzielone_wsp[0]
-                        Bm = rozdzielone_wsp[1]
-                        Bs = rozdzielone_wsp[2]
-                
-                        Bdeg=Bd+Bm/60+Bs/3600
-                        B.append(Bdeg)
-                     
-                        Ld = rozdzielone_wsp[3]
-                        Lm = rozdzielone_wsp[4]
-                        Ls = rozdzielone_wsp[5]
-
-                        Ldeg=Ld+Lm/60+Ls/3600
-                        L.append(Ldeg)
-                     
-                        wys = rozdzielone_wsp[6]
-                        H.append(wys)
-                     
-                for (b,l,h) in zip(B,L,H):
+                    rozdzielone_wsp = line.split(',')
+                    B.append(rozdzielone_wsp[0])
+                    L.append(rozdzielone_wsp[1])
+    
+                for (b,l) in zip(B,L):
                         BLH_wgs84=Transformacje(model = "wgs84")
-                        X1992, Y1992 = BLH_wgs84.u1992(float(b), float(l), float(h))
-                        print(f'Wynik transformacji BLH do układu 1992: X1992{X1992:.3f}, Y1992{Y1992:.3f}')
-                        wyniki.write("{}, {}, {}\n".format(X1992, Y1992))
+                        X1992, Y1992 = BLH_wgs84.u1992(float(b), float(l))
+                        wyniki.write("{}, {}\n".format(X1992, Y1992))
                  
                     
         elif args.m =='grs80':
@@ -570,33 +542,19 @@ if __name__=='__main__':
                  
                  B=[]
                  L=[]
-                 H=[]
+                 
                  for line in lines:
                      
-                         rozdzielone_wsp = line.split(',')
-                         Bd = rozdzielone_wsp[0]
-                         Bm = rozdzielone_wsp[1]
-                         Bs = rozdzielone_wsp[2]
+                     rozdzielone_wsp = line.split(',')
+                     B.append(rozdzielone_wsp[0])
+                     L.append(rozdzielone_wsp[1])
+                     
                          
-                         Bdeg=Bd+Bm/60+Bs/3600
-                         B.append(Bdeg)
-                         
-                         Ld = rozdzielone_wsp[3]
-                         Lm = rozdzielone_wsp[4]
-                         Ls = rozdzielone_wsp[5]
-
-                         Ldeg=Ld+Lm/60+Ls/3600
-                         L.append(Ldeg)
-                         
-                         wys = rozdzielone_wsp[6]
-                         H.append(wys)
-                         
-                 for (b,l,h) in zip(B,L,H):
+                 for (b,l) in zip(B,L):
                      #utworzy obiekt o tych współrzędnych
                      BLH_grs80=Transformacje(model = "grs80")
-                     X1992, Y1992 = BLH_grs80.u1992(float(b), float(l), float(h))
-                     print(f'Wynik transformacji BLH do układu 1992: X1992{X1992:.3f}, Y1992{Y1992:.3f}')
-                     wyniki.write("{}, {}, {}\n".format(X1992, Y1992))
+                     X1992, Y1992 = BLH_grs80.u1992(float(b), float(l))
+                     wyniki.write("{}, {}\n".format(X1992, Y1992))
                      
                  
         elif args.m =='Krasowski':
@@ -606,33 +564,19 @@ if __name__=='__main__':
                 
                 B=[]
                 L=[]
-                H=[]
+                
                 for line in lines:
                     
-                        rozdzielone_wsp = line.split(',')
-                        Bd = rozdzielone_wsp[0]
-                        Bm = rozdzielone_wsp[1]
-                        Bs = rozdzielone_wsp[2]
+                    rozdzielone_wsp = line.split(',')
+                    B.append(rozdzielone_wsp[0])
+                    L.append(rozdzielone_wsp[1])
+                   
                         
-                        Bdeg=Bd+Bm/60+Bs/3600
-                        B.append(Bdeg)
-                        
-                        Ld = rozdzielone_wsp[3]
-                        Lm = rozdzielone_wsp[4]
-                        Ls = rozdzielone_wsp[5]
-
-                        Ldeg=Ld+Lm/60+Ls/3600
-                        L.append(Ldeg)
-                        
-                        wys = rozdzielone_wsp[6]
-                        H.append(wys)
-                        
-                for (b,l,h) in zip(B,L,H):
+                for (b,l) in zip(B,L):
                     #utworzy obiekt o tych współrzędnych
                     BLH_Krasowski=Transformacje(model = "Krasowski")
-                    X1992, Y1992 = BLH_Krasowski.u1992(float(b), float(l), float(h))
-                    print(f'Wynik transformacji BLH do układu 1992: X1992{X1992:.3f}, Y1992{Y1992:.3f}')
-                    wyniki.write("{}, {}, {}\n".format(X1992, Y1992))
+                    X1992, Y1992 = BLH_Krasowski.u1992(float(b), float(l))
+                    wyniki.write("{},{}\n".format(X1992, Y1992))
 
 
        

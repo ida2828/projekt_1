@@ -170,37 +170,9 @@ class Transformacje:
 
 if __name__=='__main__':
     
-    
-    #xa=0
-    #XYZ2BLH
+
     parser = argparse.ArgumentParser(description='Transformacje współrzędnych')
-    # parser.add_argument('X', type=float, help='Współrzędna x')
-    # parser.add_argument('Y', type=float, help='Współrzędna y')
-    # parser.add_argument('Z', type=float, help='Współrzędna z')
-    # #BLH2XYZ
-    # parser.add_argument('f', type=float, help='Wartosc fi')
-    # parser.add_argument('l', type=float, help='Wartosc lambda')
-    # parser.add_argument('h', type=float, help='Wartosc h')
     
-    # #XYZ2NEU
-    # parser.add_argument('xa', type=float, help='X punktu A')
-    # parser.add_argument('ya', type=float, help='Y punktu A')
-    # parser.add_argument('za', type=float, help='Z punktu A')
-    # parser.add_argument('xb', type=float, help='X punktu B')
-    # parser.add_argument('yb', type=float, help='Y punktu B')
-    # parser.add_argument('zb', type=float, help='Z punktu B')
-    # parser.add_argument('phi', type=float, help='Wartosc fi')
-    # parser.add_argument('lam', type=float, help='Wartosc lambda')
-    # parser.add_argument('h', type=float, help='Wartosc h')
-    
-    # #fl2u2000
-    # parser.add_argument('fi', type=float, help='Wartosc fi')
-    # parser.add_argument('lambda', type=float, help='Wartosc lambda')
-    # parser.add_argument('l0', type=float, help='Numer pasa')
-    # parser.add_argument('s', type=float, help='Numer odpowiadający numerowi pasa')
-    # #fl2u1992
-    # parser.add_argument('fi', type=float, help='Wartosc fi')
-    # parser.add_argument('lambda', type=float, help='Wartosc lambda')
     parser.add_argument('-f', type=str, help='Scieżka do pliku z danymi do transformacji')
     parser.add_argument('-t', type=str, help='rodzaj transformacji')
     parser.add_argument('-m', type=str, help='model elipsoidy', choices=['wgs84', 'grs80', 'Krasowskiego'])

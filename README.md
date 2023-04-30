@@ -27,10 +27,12 @@ Program obsługuje parametry modeli elipsoid: WGS84, GRS80, Krassowskiego
 
 
 Plik wejścowy może mieć rozszerzenie .txt i być zapisnay w tym folderze co program. 
-Polecenia wykonujemy w cmd- wierszu poleceń. Program korzysta z biblioteki argparse - zatem przy wywołaniu podajemy argumenty. Przy wywołaniu argumentu "-m" wybieramy model elipsoid (wgs84, grs80, Krasowskiego) na której dokonujemy obliczeń. Argument "-t" oznacza rodzaj transformacji z której chcemy skorzystać (XYZ2BLH , BLH2XYZ, XYZ2NEU, u2000, u1992) oraz "-f" ścieżkę do pliku z danymi do transformacji. Wyniki są zapisywane za pomocą flagi "-fk", tutaj również należy podać ścieżke gdzie ma być zapisany plik.
+Polecenia wykonujemy w cmd- wierszu polecenia. Program korzysta z biblioteki argparse - zatem przy wywołaniu podajemy argumenty. Przy wywołaniu argumentu "-m" wybieramy model elipsoid (wgs84, grs80, Krasowskiego) na której dokonujemy obliczeń. Argument "-t" oznacza rodzaj transformacji z której chcemy skorzystać (XYZ2BLH , BLH2XYZ, XYZ2NEU, u2000, u1992) oraz "-f" ścieżkę do pliku z danymi do transformacji. Wyniki są zapisywane za pomocą flagi "-fk", tutaj również należy podać ścieżke gdzie ma być zapisany plik.
 
 Przykładowe wywołanie w wierszu polecenia cmd:
+
 C:\Users\Ida>python C:\Users\Ida\project_1\skrypt.py -f C:\Users\Ida\project_1\xyz.txt -m wgs84 -t XYZ2BLH -fk  C:\Users\Ida\project_1\wynikBLH.txt
+
 Dane zapisujemy w określony sposób:
 
 a)XYZ2BLH

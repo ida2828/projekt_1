@@ -56,6 +56,6 @@ Współrzędne geodezyjne kolejno fi, lambda (w radianach) oddzielone od siebie 
 
 Znane błedy  nietypowe zachowania programu, które nie zostały jeszcze naprawione:
 
-a) Po wykonaniu komndy "python skrypt.py -m grs80 -t u2000 -f daneBLH.txt -fk blh22000.txt" otrzynuje błąd w linii 112 "l0=np.deg2rad(l0) UnboundLocalError: local variable 'l0' referenced before assignment". Ma to związaek z tym że nie obłuzyłyśmy przypadku gdy podane współrzęde wypadają poza jakąkolwiek strafą układu 2000
+a) Po wykonaniu komendy "python skrypt.py -m grs80 -t u2000 -f daneBLH.txt -fk blh22000.txt" otrzynuje błąd w linii 112 "l0=np.deg2rad(l0) UnboundLocalError: local variable 'l0' referenced before assignment". Ma to związaek z tym że nie obłuzyłyśmy przypadku gdy podane współrzęde wypadają poza jakąkolwiek strafą układu 2000
 
 b)transformacja Krasowski -> 2000 oraz Krasowski -> 1992 daje błedne rezultaty i nie powinna być uzywana

@@ -1,13 +1,13 @@
 INSTRUKCJA
 
 1.Zasotsowanie programu:
--przeliczenie współrzędnych geocentrycznych XYZ na współrzędne geodezyjne BLH
+-przeliczenie współrzędnych geocentrycznych XYZ (metry) na współrzędne geodezyjne BLH (radiany)
 
--przeliczenie współrzędnych geodezyjnych BLH do współrzędnych geocentrycznych XYZ
+-przeliczenie współrzędnych geodezyjnych BLH (radiany) do współrzędnych geocentrycznych XYZ (metry)
 
--przeliczenie współrzędnych geocentrycznych XYZ do współrzędnych topocentrcznych NEU
+-przeliczenie współrzędnych geocentrycznych XYZ (metry) do współrzędnych topocentrcznych NEU 
 
--przeliczenie współrzędnych geodezyjnych BLHdo współrzędnych prostokątnych w układzie 2000
+-przeliczenie współrzędnych geodezyjnych BLH (radiany) do współrzędnych prostokątnych w układzie 2000
 
 -przeliczenie współrzędnych geodezyjnych BLH do współrzędnych prostokątnych w układzie 1992
 
@@ -40,7 +40,7 @@ wynik wywołania:
 Dane zapisujemy w określony sposób:
 
 a)XYZ2BLH
-Współrzędne geocentryczne koljeno: X , Y , Z oddzielone od siebie przecinakmi, a części dziesiętne oddzielone kropką przykładowo: 3782580.000,1084640.000,5002880.000
+Współrzędne geocentryczne koljeno: X , Y , Z (w metrach) oddzielone od siebie przecinakmi, a części dziesiętne oddzielone kropką przykładowo: 3782580.000,1084640.000,5002880.000
 
 b)BLH2XYZ
 Współrzędne geodezyjne kolejno fi, lambda, ha (w radianach) oddzielone od siebie przecinakmi, a części dziesiętne oddzielone kropką przykładowo:0.7100,1.2915,46.15
@@ -49,13 +49,11 @@ c)XYZ2neu
 Współrzędne geocentryczne XYZ początka odcinka i współrzędnych geocentrycznych XYZ oraz  współrzędne geodezyjne fi, lambda, ha. Zapisane w następującej kolejności: Xpoczątkowe, Ypoczątkowe, Zpoczątkowe, Xkońcowe, Ykońcowe, Zkońcowe, fi, lambda, ha. Przy czym współrzędne musza być one oddzielone od siebie przecinkami, a części dziesiętne oddzielone od jedności kropką. Przykładowo:3782520.000,1084820.000,5003000.000,3782647.600,1084331.060,5003550.000,66,19,150
 
 d)u2000
-Współrzędne geodezyjne kolejno fi, lambda, ha (w radianach) oddzielone od siebie przecinakmi, a części dziesiętne oddzielone kropką przykładowo: 0.3320,2.0001,12.9900
+Współrzędne geodezyjne kolejno fi, lambda, ha (w radianach) oddzielone od siebie przecinakmi, a części dziesiętne oddzielone kropką przykładowo: 0.3320,2.0001,12.9900 . Lambda powinna zawierać się między 13,5 a 25,5 aby współrzędne wpadały tylko w strefy obsługiwane przez naszą funkcję.   
 
 e)u1992
 Współrzędne geodezyjne kolejno fi, lambda (w radianach) oddzielone od siebie przecinakmi, a części dziesiętne oddzielone kropką przykładowo: 0.9200,0.2643
 
 Znane błedy  nietypowe zachowania programu, które nie zostały jeszcze naprawione:
 
-a) Po wykonaniu komendy "python skrypt.py -m grs80 -t u2000 -f daneBLH.txt -fk blh22000.txt" otrzynuje błąd w linii 112 "l0=np.deg2rad(l0) UnboundLocalError: local variable 'l0' referenced before assignment". Ma to związaek z tym że nie obłużyłyśmy przypadku gdy podane współrzęde wypadają poza jakąkolwiek strafą układu 2000
-
-b)transformacja Krasowski -> 2000 oraz Krasowski -> 1992 daje błedne rezultaty i nie powinna być uzywana
+a)transformacja Krasowski -> 2000 oraz Krasowski -> 1992 daje błedne rezultaty i nie powinna być uzywana

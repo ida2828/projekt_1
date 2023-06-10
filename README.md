@@ -5,11 +5,11 @@ INSTRUKCJA
 
 -przeliczenie współrzędnych geodezyjnych BLH (radiany) do współrzędnych geocentrycznych XYZ (metry)
 
--przeliczenie współrzędnych geocentrycznych XYZ (metry) do współrzędnych topocentrcznych NEU 
+-przeliczenie współrzędnych geocentrycznych XYZ (metry) do współrzędnych topocentrcznych NEU (metry)
 
--przeliczenie współrzędnych geodezyjnych BLH (radiany) do współrzędnych prostokątnych w układzie 2000
+-przeliczenie współrzędnych geodezyjnych BLH (radiany) do współrzędnych prostokątnych w układzie 2000 (metry)
 
--przeliczenie współrzędnych geodezyjnych BLH do współrzędnych prostokątnych w układzie 1992
+-przeliczenie współrzędnych geodezyjnych BLH (radiany) do współrzędnych prostokątnych w układzie 1992 (metry)
 
 
 
